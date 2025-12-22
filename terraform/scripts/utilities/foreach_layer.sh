@@ -53,6 +53,7 @@ for layer in "${layers[@]}"; do
      echo "Layer: $layer"
      echo "Command: terraform ${COMMAND[*]}"
      echo "------------------------------------------------------------"
+     echo ""
      (cd "$LAYER_PATH" && terraform "${COMMAND[@]}")
      echo ""
   fi
