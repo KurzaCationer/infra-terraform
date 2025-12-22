@@ -29,8 +29,8 @@ terraform.rc
 *_kubeconfig.yaml
 
 ### --- Secrets & SSH ---
-**/ssh.private
-**/ssh.public
+ssh.private
+ssh.public
 
 ### --- Logs & Plans ---
 tf.plan
