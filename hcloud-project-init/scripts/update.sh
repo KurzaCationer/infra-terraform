@@ -11,3 +11,5 @@ packer build ./hcloud-project-init/hcloud-microos-snapshots.pkr.hcl
 # Delete old snapshots
 hcloud image list -a arm -l microos-snapshot=yes --output json | jq '.[:-1]' | jq '.[].id' | xargs -I {} hcloud image delete {}
 hcloud image list -a x86 -l microos-snapshot=yes --output json | jq '.[:-1]' | jq '.[].id' | xargs -I {} hcloud image delete {}
+
+hcloud context delete context
