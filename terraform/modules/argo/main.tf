@@ -30,24 +30,6 @@ resource "helm_release" "helm_argocd" {
         secret = {
           argocdServerAdminPassword = var.hashed_admin_password
         }
-        cm = {
-          dex = {
-            config = yamlencode({
-              connectors = [
-                {
-                  type = "github",
-                  id   = "github",
-                  name = "Github",
-                  config = {
-                    clientId     = "$argocd-gh-secret:client.id"
-                    clientSecret = "$argocd-gh-secret:client.secret"
-                    orgs         = [{ name : "metmij" }]
-                  }
-                }
-              ]
-            })
-          }
-        }
       }
       server = {
         ingress = {
