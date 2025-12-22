@@ -17,8 +17,20 @@ while IFS= read -r output; do
     x86_valid=true
 done < <(hcloud image list -a x86 -l microos-snapshot=yes --output json | jq '.[0:]' | jq '.[].id')
 
+hcloud context delete context
+
 if [[ $arm_valid == true && $x86_valid == true ]]
 then
-    echo "Snapshots valid"
-    exit 1
+    echo "Snapshots available"
+    if [[ "$1" == "1" ]]; then
+      exit 1
+    else
+      exit 0
+    fi
+fi
+echo "Snapshots unavailable"
+if [[ "$1" == "1" ]]; then
+      exit 0
+else
+      exit 1
 fi
