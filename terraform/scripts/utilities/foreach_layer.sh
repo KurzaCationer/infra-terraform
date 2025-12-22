@@ -2,10 +2,15 @@
 set -e
 
 REVERSE=false
+QUIET=false
 START_INDEX=1
 
 while [[ $# -gt 0 ]]; do
   case $1 in
+    -q|--quiet)
+      QUIET=true
+      shift
+      ;;
     -r|--reverse)
       REVERSE=true
       shift
@@ -47,14 +52,22 @@ fi
 for layer in "${layers[@]}"; do
   LAYER_PATH="./terraform/layers/$layer"
   if [ ${#COMMAND[@]} -eq 0 ]; then
-     echo "$LAYER_PATH"
+    if [ $QUIET == false ]; then
+      echo "$LAYER_PATH"
+    fi
   else
-     echo "------------------------------------------------------------"
-     echo "Layer: $layer"
-     echo "Command: terraform ${COMMAND[*]}"
-     echo "------------------------------------------------------------"
-     echo ""
-     (cd "$LAYER_PATH" && terraform "${COMMAND[@]}")
-     echo ""
+    if [ $QUIET == false ]; then
+      echo "------------------------------------------------------------"
+      echo "Layer: $layer"
+      echo "Command: terraform ${COMMAND[*]}"
+      echo "------------------------------------------------------------"
+      echo ""
+    fi
+
+    (cd "$LAYER_PATH" && terraform "${COMMAND[@]}")
+
+    if [ $QUIET == false ]; then
+      echo ""
+    fi
   fi
 done
