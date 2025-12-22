@@ -1,0 +1,38 @@
+### --- IDEs (IntelliJ, JetBrains, etc.) ---
+.idea/
+.idea_modules/
+*.iws
+out/
+cmake-build-*/
+atlassian-ide-plugin.xml
+com_crashlytics_export_strings.xml
+crashlytics*.properties
+fabric.properties
+
+### --- Terraform ---
+.terraform/
+*.tfstate
+*.tfstate.*
+.terraform.tfstate.lock.info
+*.tfvars
+*.tfvars.json
+*override.tf
+*override.tf.json
+.terraformrc
+terraform.rc
+
+### --- Terragrunt ---
+.terragrunt-cache
+
+### --- kube-hetzner/hcloud Terraform Module ---
+*_kustomization_backup.yaml
+*_kubeconfig.yaml
+
+### --- Secrets & SSH ---
+**/ssh.private
+**/ssh.public
+
+### --- Logs & Plans ---
+tf.plan
+plan
+crash*.log
