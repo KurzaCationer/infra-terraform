@@ -11,8 +11,3 @@ output "kubeconfig" {
 output "data_plane_ip" {
   value = module.cluster.data_plane_ip
 }
-
-output "argo_cd_admin_password" {
-  value = random_password.argo_cd_admin_password.result
-  sensitive = true
-}

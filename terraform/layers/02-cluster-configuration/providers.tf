@@ -35,9 +35,16 @@ provider "kubernetes" {
   cluster_ca_certificate = data.terraform_remote_state.cluster.outputs.kubeconfig_data.cluster_ca_certificate
 }
 
+data "kubernetes_secret_v1" "argocd_admin_password" {
+  metadata {
+    name = "argocd-initial-admin-secret"
+    namespace = "argocd"
+  }
+}
+
 provider "argocd" {
   username = "admin"
-  password = data.terraform_remote_state.cluster.outputs.argo_cd_admin_password
+  password = data.kubernetes_secret_v1.argocd_admin_password.data.password
   port_forward = true
   plain_text = true
   kubernetes {

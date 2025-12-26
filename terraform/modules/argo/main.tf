@@ -20,25 +20,9 @@ resource "helm_release" "helm_argocd" {
 
   values = [
     yamlencode({
-      global = {
-        domain = var.argocd_domain
-      }
       configs = {
         params = {
           "server.insecure" = true
-        }
-        secret = {
-          argocdServerAdminPassword = var.hashed_admin_password
-        }
-      }
-      server = {
-        ingress = {
-          enabled          = true
-          ingressClassName = var.ingress_class_name
-          annotations = {
-            "cert-manager.io/cluster-issuer" = var.cert_manager_cluster_issuer
-          }
-          tls = true
         }
       }
     })
