@@ -32,7 +32,7 @@ resource "kubernetes_manifest" "cluster_issuer_lets_encrypt_staging" {
               cloudflare = {
                 apiTokenSecretRef = {
                   name = kubernetes_secret_v1.cluster_issuer_cf_dns_token.metadata[0].name
-                  key = local.cf_api_token_key
+                  key  = local.cf_api_token_key
                 }
               }
             }
@@ -63,7 +63,7 @@ resource "kubernetes_manifest" "cluster_issuer_lets_encrypt_prod" {
               cloudflare = {
                 apiTokenSecretRef = {
                   name = kubernetes_secret_v1.cluster_issuer_cf_dns_token.metadata[0].name
-                  key = local.cf_api_token_key
+                  key  = local.cf_api_token_key
                 }
               }
             }

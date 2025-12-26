@@ -1,8 +1,8 @@
 terraform {
   backend "s3" {
-    bucket = "kurza-infra-tf-state"
-    key = "02-cluster-configuration.tfstate"
-    region = "eu-central-1"
+    bucket  = "kurza-infra-tf-state"
+    key     = "02-cluster-configuration.tfstate"
+    region  = "eu-central-1"
     encrypt = true
   }
 
@@ -23,7 +23,7 @@ data "terraform_remote_state" "cluster" {
 
   config = {
     bucket = "kurza-infra-tf-state"
-    key = "01-cluster.tfstate"
+    key    = "01-cluster.tfstate"
     region = "eu-central-1"
   }
 }
@@ -37,16 +37,16 @@ provider "kubernetes" {
 
 data "kubernetes_secret_v1" "argocd_admin_password" {
   metadata {
-    name = "argocd-initial-admin-secret"
+    name      = "argocd-initial-admin-secret"
     namespace = "argocd"
   }
 }
 
 provider "argocd" {
-  username = "admin"
-  password = data.kubernetes_secret_v1.argocd_admin_password.data.password
+  username     = "admin"
+  password     = data.kubernetes_secret_v1.argocd_admin_password.data.password
   port_forward = true
-  plain_text = true
+  plain_text   = true
   kubernetes {
     host                   = data.terraform_remote_state.cluster.outputs.kubeconfig_data.host
     client_certificate     = data.terraform_remote_state.cluster.outputs.kubeconfig_data.client_certificate
