@@ -1,4 +1,11 @@
 terraform {
+  backend "s3" {
+    bucket = "kurza-infra-tf-state"
+    key = "01-cluster.tfstate"
+    region = "eu-central-1"
+    encrypt = true
+  }
+
   required_providers {
     cloudflare = {
       source  = "cloudflare/cloudflare"
