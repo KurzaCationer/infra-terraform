@@ -45,16 +45,8 @@ module "cluster" {
   create_kubeconfig = var.create_kubeconfig
 }
 
-resource "random_password" "argo_cd_admin_password" {
-  length = 32
-}
-
 module "argo" {
   source = "../../modules/argo"
-  argocd_domain = "argocd.kurza.nl"
-  cert_manager_cluster_issuer = "letsencrypt-prod"
-  hashed_admin_password = random_password.argo_cd_admin_password.bcrypt_hash
-  ingress_class_name = "traefik"
 }
 
 locals {
