@@ -29,7 +29,7 @@ module "cluster" {
   }
   hetzner_hcloud_token  = var.hcloud_token
 
-  cluster_name          = "selfhosted-infrastructure"
+  cluster_name          = "infra"
   control_plane_address = coalesce(module.cluster.control_plane_ip.ipv4, module.cluster.control_plane_ip.ipv6)
 
   dns_servers = ["9.9.9.11", "149.112.112.11", "2620:fe::11"]
