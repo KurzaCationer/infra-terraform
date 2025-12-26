@@ -22,8 +22,6 @@ module "kube-hetzner" {
   hetzner_ccm_use_helm              = true
   enable_klipper_metal_lb           = true
   allow_scheduling_on_control_plane = true
-  automatically_upgrade_k3s         = false
-  system_upgrade_use_drain          = true
   automatically_upgrade_os          = false
   enable_local_storage              = true
   create_kubeconfig                 = var.create_kubeconfig
