@@ -13,6 +13,10 @@ locals {
   )
 }
 
+output "safe_source_urls" {
+  value = local.safe_source_urls
+}
+
 data "http" "cloudflare_source_ips" {
   url = "https://api.cloudflare.com/client/v4/ips"
 }
