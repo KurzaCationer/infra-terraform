@@ -47,12 +47,12 @@ module "kube-hetzner" {
 
   control_plane_nodepools = [
     {
-      name        = "control-plane-nbg1",
+      name        = "control-plane-fsn1",
       server_type = "cpx32",
-      location    = "nbg1",
+      location    = "fsn1",
       labels      = [],
       taints      = [],
-      count       = 1
+      count       = 1,
     },
   ]
   agent_nodepools = []
