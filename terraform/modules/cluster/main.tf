@@ -26,7 +26,6 @@ module "kube-hetzner" {
   system_upgrade_use_drain          = true
   automatically_upgrade_os          = false
   create_kubeconfig                 = var.create_kubeconfig
-  enable_cert_manager               = false
 
   dns_servers = var.dns_servers
 
