@@ -25,6 +25,7 @@ module "kube-hetzner" {
   automatically_upgrade_k3s         = false
   system_upgrade_use_drain          = true
   automatically_upgrade_os          = false
+  enable_local_storage              = true
   create_kubeconfig                 = var.create_kubeconfig
 
   dns_servers = var.dns_servers
