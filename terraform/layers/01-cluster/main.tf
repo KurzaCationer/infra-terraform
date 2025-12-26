@@ -23,7 +23,10 @@ data "http" "cloudflare_source_ips" {
 
 locals {
   cloudflare_source_ips_json = jsondecode(data.http.cloudflare_source_ips.response_body)
-  cloudflare_source_ips = concat(local.cloudflare_source_ips_json.result.ipv4_cidrs, local.cloudflare_source_ips_json.result.ipv6_cidrs)
+  cloudflare_source_ips = concat(
+    local.cloudflare_source_ips_json["result"]["ipv4_cidrs"],
+    local.cloudflare_source_ips_json["result"]["ipv6_cidrs"]
+  )
 }
 
 module "cluster" {
@@ -31,7 +34,7 @@ module "cluster" {
   providers = {
     hcloud = hcloud
   }
-  hetzner_hcloud_token  = var.hcloud_token
+  hetzner_hcloud_token = var.hcloud_token
 
   cluster_name          = "infra"
   control_plane_address = coalesce(module.cluster.control_plane_ip.ipv4, module.cluster.control_plane_ip.ipv6)

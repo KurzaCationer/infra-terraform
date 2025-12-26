@@ -12,6 +12,6 @@ variable "cloudflare_token" {
 
 variable "create_kubeconfig" {
   description = "Whether to create file containing kubeconfig"
-  type = bool
-  default = false
+  type        = bool
+  default     = false
 }
