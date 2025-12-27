@@ -1,0 +1,50 @@
+name: analyze
+on:
+  pull_request:
+    types: [ opened, reopened, synchronize ]
+    branches-ignore:
+      - "**/graphite-base/**"
+
+jobs:
+  validate-bash:
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v3
+      - name: Run ShellCheck
+        uses: ludeeus/action-shellcheck@master
+        with:
+          scandir: './scripts' # Adjust to your script directory
+          severity: error
+  validate-terraform:
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v6
+      - uses: hashicorp/setup-terraform@v3
+      - name: Terraform Fmt
+        run: terraform fmt -check -recursive
+      - name: Terraform Init
+        run: terraform init -backend=false
+      - name: Terraform Validate
+        run: terraform validate
+  validate-packer:
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v6
+      - uses: hashicorp/setup-packer@main
+      - name: Packer Fmt
+        run: packer fmt -check -recursive ./hcloud-project-init
+      - name: Packer Validate
+        env:
+          HCLOUD_TOKEN: "dummytoken"
+        run: packer validate ./hcloud-project-init
+  security-scan:
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v3
+      - name: Run Checkov
+        uses: bridgecrewio/checkov-action@master
+        with:
+          directory: '.'
+          framework: terraform,packer
+          quiet: true
+          soft_fail: false
