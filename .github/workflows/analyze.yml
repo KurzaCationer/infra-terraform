@@ -16,7 +16,7 @@ jobs:
           scandir: './scripts' # Adjust to your script directory
           severity: error
   validate-terraform:
-    runs-on: self-hosted
+    runs-on: self-hosted 
     steps:
       - uses: actions/checkout@v6
       - uses: hashicorp/setup-terraform@v3
