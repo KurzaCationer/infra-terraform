@@ -31,7 +31,7 @@ terraform.rc
 ### --- Secrets & SSH ---
 ssh.private
 ssh.public
-/.aws/credentials
+**/.aws
 
 ### --- Logs & Plans ---
 tf.plan

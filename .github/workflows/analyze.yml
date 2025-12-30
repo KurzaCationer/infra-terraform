@@ -7,7 +7,7 @@ on:
 
 jobs:
   validate-bash:
-    runs-on: self-hosted
+    runs-on: runner-scale-set-personal-infra-terraform
     steps:
       - uses: actions/checkout@v3
       - name: Run ShellCheck
@@ -16,7 +16,7 @@ jobs:
           scandir: './scripts' # Adjust to your script directory
           severity: error
   validate-terraform:
-    runs-on: self-hosted
+    runs-on: runner-scale-set-personal-infra-terraform
     steps:
       - uses: actions/checkout@v6
       - uses: hashicorp/setup-terraform@v3
@@ -27,10 +27,12 @@ jobs:
       - name: Terraform Validate
         run: terraform validate
   validate-packer:
-    runs-on: self-hosted
+    runs-on: runner-scale-set-personal-infra-terraform
     steps:
       - uses: actions/checkout@v6
       - uses: hashicorp/setup-packer@main
+      - name: Packer Fmt
+        run: packer init ./hcloud-project-init
       - name: Packer Fmt
         run: packer fmt -check -recursive ./hcloud-project-init
       - name: Packer Validate
@@ -38,13 +40,13 @@ jobs:
           HCLOUD_TOKEN: "dummytoken"
         run: packer validate ./hcloud-project-init
   security-scan:
-    runs-on: self-hosted
+    runs-on: runner-scale-set-personal-infra-terraform
     steps:
       - uses: actions/checkout@v3
       - name: Run Checkov
         uses: bridgecrewio/checkov-action@master
         with:
           directory: '.'
-          framework: terraform,packer
+          framework: terraform
           quiet: true
           soft_fail: false

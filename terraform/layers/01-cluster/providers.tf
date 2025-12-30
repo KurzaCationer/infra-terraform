@@ -15,11 +15,19 @@ terraform {
       source  = "hetznercloud/hcloud"
       version = ">= 1.51.0"
     }
+    aws = {
+      source  = "hashicorp/aws"
+      version = "6.17.0"
+    }
     random = {
       source  = "hashicorp/random"
       version = "3.7.2"
     }
   }
+}
+
+provider "aws" {
+  region = "eu-central-1"
 }
 
 provider "hcloud" {

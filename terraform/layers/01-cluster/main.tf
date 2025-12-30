@@ -56,18 +56,15 @@ module "argo" {
   source = "../../modules/argo"
 }
 
-locals {
-  cloudflare_zone_ids = toset([
-    "ba552fa5fbf14058b187ed804de62161",
-    "a1b67a7278977072d9713fd6108911a4"
-  ])
-}
-
 module "dns" {
-  source   = "../../modules/dns"
-  for_each = local.cloudflare_zone_ids
+  source                = "../../modules/dns"
+  cloudflare_account_id = "2e9b6d7593bbd1de6d962e26e4b5f4da"
+  dns_zones = {
+    "kurza.nl"    = ["@", "*"]
+    "dylannas.nl" = ["@", "*"]
+  }
 
-  cloudflare_zone_id      = each.value
-  data_plane_domain_names = ["*", "@"]
-  data_plane_ip           = module.cluster.data_plane_ip
+  contact_information = var.domain_contact_information
+  data_plane_ip = module.cluster.data_plane_ip
 }
+
